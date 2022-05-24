@@ -2,7 +2,8 @@ import argparse
 import os
 import numpy as np
 from scipy.ndimage.filters import gaussian_filter
-from scipy.misc import imresize
+#from scipy.misc import imresize
+from PIL import Image 
 
 def parse_args():
     desc = "phd08 한글 텍스트 데이터를 numpy array 로 바로 변환 가능한 npy 파일 형태로 바꿔좁니다."
@@ -16,7 +17,7 @@ def parse_args():
                         help='저장할때의 세로 어레이 사이즈', required=False)
     parser.add_argument('--gaussian_sigma', type=float, default=.3,
                         help='가우시안 필터 적용 시 시그마 값', required=False)
-    parser.add_argument('--batch_size', type=int, default=2,
+    parser.add_argument('--batch_size', type=int, default=10,
                         help='몇개의 글자씩 합쳐서 저장할 것인지 (max 10)', required=False)
 
     return parser.parse_args()
@@ -37,6 +38,7 @@ def txt_to_npy(all_file_count, index, data, labels,
         not_data_checker = 0
         font_array = []
         real_data_counter = 0
+        num=0
         for line in lines:
             if font_start_checker(line):  # endl
                 not_data_checker = 0
@@ -47,7 +49,7 @@ def txt_to_npy(all_file_count, index, data, labels,
                     continue
                 # data
                 font_blurred_array = gaussian_filter(font_array, sigma=sigma)
-                font_blurred_array = imresize(font_blurred_array, [height, width])
+                font_blurred_array = np.array(Image.fromarray(font_blurred_array).resize([height, width]))
                 font_blurred_array = font_blurred_array.astype(np.float32)
 
                 data.append(font_blurred_array)
@@ -62,6 +64,10 @@ def txt_to_npy(all_file_count, index, data, labels,
 
                 font_array = []
 
+                num += 1
+                if num == 500:
+                    break
+                
                 continue
             else:  # not endl
                 not_data_checker += 1

@@ -39,6 +39,7 @@ def txt_to_png(file_orig_path, file_full_path, width, height, sigma):
         font_array = None
         font_name = ''
         real_data_counter = 0
+        num = 0
         for line in lines:
             if font_start_checker(line):  # endl
                 # save
@@ -52,10 +53,16 @@ def txt_to_png(file_orig_path, file_full_path, width, height, sigma):
                 fig.savefig('phd08_png_results/' + file_orig_path +
                             '/' + font_name + '.png', dpi=1)
                 plt.close(fig)
-
+                
                 not_data_checker = 0
                 font_counter += 1
                 real_data_counter = 0
+
+                num += 1
+                #print(num)
+                if num == 50:
+                    break
+
                 continue
             else:  # not endl
                 not_data_checker += 1
