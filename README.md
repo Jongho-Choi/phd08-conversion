@@ -1,46 +1,34 @@
-## PHD08 Conversion
 
-> [phd08](https://www.dropbox.com/s/69cwkkqt4m1xl55/phd08.alz?dl=0) 
-데이터셋을 .png 로 저장하거나, numpy array 로 바로 변환 가능한 npy 파일 형태로 변환해 줍니다. 
-이미지 / 텍스트는 기존 바이너리로 되어 있던 것을 가우시안 필터로 블러링합니다.
+---- 중요사항 ----
+phd08과 관련된 결과물들이 총 14 GB이기 때문에 phd08 raw데이터는 인터넷에서 다운받고 phd08_npy_results phd08_png_results는 따로 python 파일을 구동해서 만들기 바랍니다.
 
-## Requirements
-- python3
-- numpy
-- matplotlib
-- scipy
+---- 파일 설명 ----
 
-## Usage
-### phd08_to_png.py
-- **help**
-```
-python phd08_to_png.py --help
-```
+phd08_to_npy.py
+phd08 파일을 array 형태로 저장
 
-- **phd08** to **png**
-```
-python phd08_to_png.py --data_dir=DATA_DIR [--width=WIDTH] 
-                       [--height=HEIGHT] [--gaussian_sigma=GAUSSIAN_SIGMA]  
-```
-> result in ./phd08_png_results/
+phd08_to_png.py
+phd08 파일을 이미지 형태로 저장
 
-### phd08_to_np_arr.py
-- **help**
-```
-python phd08_to_np_arr.py --help
-```
+npy_data.py
+array 형태의 데이터 전처리 과정
 
-- **phd08** to **npy**
-```
-phd08_to_npy.py [-h] --data_dir DATA_DIR [--one_hot] [--width WIDTH]
-                     [--height HEIGHT] [--gaussian_sigma GAUSSIAN_SIGMA]
-```
-> result in ./phd08_npy_results/
+train.ipynb
+KCL 모델 학습
 
-## Example & Screenshot
-```
-python phd08_to_png.py --data_dir=phd08_png_results --width=10 --height=10
-```
-![screenshot2](./images/screenshot_2.png)
+---- 폴더 설명 ----
 
-![screenshot1](./images/screenshot_1.png)
+figures
+train.ipynb 에서 학습한 train_acc, val_acc 그래프 저장
+
+models
+train.ipynb 에서 학습한 KCL 모델 저장
+
+phd08
+phd08 데이터셋
+
+phd08_npy_results
+array 형태로 변환된 데이터 저장
+
+phd08_png_results
+이미지 형태로 변환된 데이터 저장
